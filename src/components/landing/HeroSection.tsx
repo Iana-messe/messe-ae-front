@@ -12,6 +12,7 @@ import { useState, useEffect, useRef } from "react";
 import { ContactFormModal } from "@/components/ContactFormModal";
 import { ClientOnly } from "@/components/ClientOnly";
 import { SafeVideoPlayer } from "@/components/SafeVideoPlayer";
+import { trackModalOpen } from "@/lib/analytics";
 
 const HeroSection = () => {
   const [showFloatingButton, setShowFloatingButton] = useState(false);
@@ -233,7 +234,10 @@ const HeroSection = () => {
         {/* Discuss Your Project Button - Desktop Only */}
         <Button
           variant="contained"
-          onClick={() => setContactModalOpen(true)}
+          onClick={() => {
+            trackModalOpen("hero_desktop");
+            setContactModalOpen(true);
+          }}
           sx={{
             position: "absolute",
             right: "2.5rem",
@@ -324,7 +328,10 @@ const HeroSection = () => {
             ref={heroButtonRef}
             variant="contained"
             fullWidth
-            onClick={() => setContactModalOpen(true)}
+            onClick={() => {
+              trackModalOpen("hero_mobile_primary");
+              setContactModalOpen(true);
+            }}
             sx={{
               width: "100%",
               height: "48px",
@@ -382,7 +389,10 @@ const HeroSection = () => {
           <Button
             variant="contained"
             fullWidth
-            onClick={() => setContactModalOpen(true)}
+            onClick={() => {
+              trackModalOpen("hero_mobile_floating");
+              setContactModalOpen(true);
+            }}
             data-id="floating-button"
             sx={{
               position: "fixed",

@@ -1,20 +1,12 @@
-import type { Metadata } from 'next';
+import { createMetadata } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'About Us',
-  description: 'Learn about Messe.ae - a leading exhibition stand builder with 20+ years of expertise in creating innovative exhibition solutions worldwide.',
-  openGraph: {
-    title: 'About Messe.ae - Exhibition Stand Builder & Designer',
-    description: 'Discover our story, expertise, and commitment to creating exceptional exhibition experiences. Part of ExpoGlobal group.',
-    url: 'https://messe.ae/about',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'About Messe.ae - Exhibition Stand Builder & Designer',
-    description: 'Discover our story, expertise, and commitment to creating exceptional exhibition experiences.',
-  },
-};
+export const metadata = createMetadata({
+  title: 'About Messe.ae | Exhibition Stand Builder & Designer',
+  description:
+    'Discover Messe.ae, part of Expoglobal Group. Learn about our 20+ years of exhibition stand experience delivering award-winning booths across Dubai and the UAE.',
+  path: '/about',
+  keywords: ['about messe.ae', 'expoglobal group', 'exhibition stand team'],
+});
 
 export default function AboutLayout({
   children,

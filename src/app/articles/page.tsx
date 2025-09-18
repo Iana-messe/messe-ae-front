@@ -1,4 +1,3 @@
-import { Metadata } from 'next';
 import {
   Box,
   Container,
@@ -14,25 +13,18 @@ import ArticleListItem from '@/components/ArticleListItem';
 import { articlesApi } from '@/lib/api/articles';
 import { formatArticleDate } from '@/utils/date';
 import Link from 'next/link';
+import { createMetadata } from '@/lib/seo';
 
 // ISR - revalidate every 300 seconds (5 minutes) 
 export const revalidate = 300;
 
-export const metadata: Metadata = {
-  title: 'Messe.ae Blog - Exhibition Stand Insights & Industry Updates',
-  description: 'Explore the latest exhibition stand trends, expert insights, and industry updates in our blog, featuring innovative designs and event solutions.',
-  openGraph: {
-    title: 'Messe.ae Blog - Exhibition Stand Insights & Industry Updates',
-    description: 'Explore the latest exhibition stand trends, expert insights, and industry updates in our blog, featuring innovative designs and event solutions.',
-    url: 'https://messe.ae/articles',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Messe.ae Blog - Exhibition Stand Insights & Industry Updates',
-    description: 'Explore the latest exhibition stand trends, expert insights, and industry updates in our blog.',
-  },
-};
+export const metadata = createMetadata({
+  title: 'Messe.ae Blog | Exhibition Stand Insights & Industry Updates',
+  description:
+    'Explore Messe.ae articles covering exhibition stand design trends, event marketing strategies, and behind-the-scenes expertise from our UAE team.',
+  path: '/articles',
+  keywords: ['messe.ae blog', 'exhibition stand insights', 'event marketing tips'],
+});
 
 export default async function ArticlesPage() {
   let data;

@@ -1,4 +1,3 @@
-import { Metadata } from 'next';
 import {
   Box,
   Container,
@@ -15,6 +14,7 @@ import { articlesApi } from '@/lib/api/articles';
 import { formatArticleDate } from '@/utils/date';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import { createMetadata } from '@/lib/seo';
 
 // ISR - revalidate every 300 seconds (5 minutes)
 export const revalidate = 300;
@@ -44,20 +44,20 @@ export async function generateStaticParams() {
   }
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ page: string }> }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ page: string }> }) {
   const { page } = await params;
   const pageNumber = parseInt(page, 10);
-  
-  return {
-    title: `Articles - Page ${pageNumber} | Messe.ae Blog`,
-    description: `Browse through our exhibition stand articles and insights - Page ${pageNumber}. Expert knowledge and industry updates from Messe.ae.`,
-    openGraph: {
-      title: `Articles - Page ${pageNumber} | Messe.ae Blog`,
-      description: `Exhibition stand articles and insights - Page ${pageNumber}`,
-      url: `https://messe.ae/articles/page/${pageNumber}`,
-      type: 'website',
-    },
-  };
+
+  return createMetadata({
+    title: `Messe.ae Blog | Page ${pageNumber} Insights`,
+    description: `Browse Messe.ae exhibition stand articles and event strategy insights on page ${pageNumber}. Fresh expertise for trade show planners and marketers.`,
+    path: `/articles/page/${pageNumber}`,
+    keywords: [
+      `messe.ae blog page ${pageNumber}`,
+      'exhibition stand articles',
+      'event strategy insights',
+    ],
+  });
 }
 
 interface PageProps {

@@ -1,10 +1,18 @@
 "use client";
 
 import React, { useState } from "react";
-import { Box, Container, Typography, Button } from "@mui/material";
+import {
+  Box,
+  Container,
+  Typography,
+  Button,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import { ContactFormModal } from "@/components/ContactFormModal";
+import { trackModalOpen } from "@/lib/analytics";
 
 // Project categories configuration
 const projectCategoriesConfig = [
@@ -138,7 +146,8 @@ const ProjectCard = ({ category }: { category: ProjectCategory }) => {
 };
 
 const ProjectsSection = () => {
-  // Modal state from context
+  const theme = useTheme();
+  const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
   const [contactModalOpen, setContactModalOpen] = useState(false);
 
   return (
@@ -254,7 +263,12 @@ const ProjectsSection = () => {
           <Button
             variant="contained"
             size="large"
-            onClick={() => setContactModalOpen(true)}
+            onClick={() => {
+              trackModalOpen(
+                isDesktop ? "home_projects_desktop" : "home_projects_mobile"
+              );
+              setContactModalOpen(true);
+            }}
             sx={{
               width: { xs: "100%", md: "316px" },
               minWidth: { xs: "200px", md: "316px" },

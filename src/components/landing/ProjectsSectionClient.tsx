@@ -6,6 +6,8 @@ import {
   Container,
   Typography,
   Button,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -13,6 +15,7 @@ import { ContactFormModal } from '@/components/ContactFormModal';
 import { useMobileMenu } from '@/contexts/MobileMenuContext';
 import { Project } from '@/types/api';
 import { STRAPI_BASE_URL } from '@/lib/api/config';
+import { trackModalOpen } from '@/lib/analytics';
 
 // Helper function to get full image URL
 const getImageUrl = (url: string) => {
@@ -306,6 +309,8 @@ const ProjectsSectionClient = ({ projects }: ProjectsSectionClientProps) => {
   
   // Modal state from context
   const { isModalOpen, setModalOpen } = useMobileMenu();
+  const theme = useTheme();
+  const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
   
   // Group projects by category
   const categorizedProjects = useMemo(() => {
@@ -480,7 +485,12 @@ const ProjectsSectionClient = ({ projects }: ProjectsSectionClientProps) => {
           <Button
             variant="contained"
             size="large"
-            onClick={() => setModalOpen(true)}
+            onClick={() => {
+              trackModalOpen(
+                isDesktop ? 'projects_page_desktop' : 'projects_page_mobile'
+              );
+              setModalOpen(true);
+            }}
             sx={{
               width: { xs: '100%', md: '316px' },
               minWidth: { xs: '200px', md: '316px' },

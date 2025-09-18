@@ -8,6 +8,7 @@ import { ContactFormModal } from "@/components/ContactFormModal";
 import { Article } from "@/components/ArticleCard";
 import LinkedInNotification from "@/components/LinkedInNotification";
 import SmallArticleCard from "@/components/SmallArticleCard";
+import { trackModalOpen } from "@/lib/analytics";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
@@ -374,7 +375,10 @@ export default function ArticlePageClient({
         >
           <Button
             variant="contained"
-            onClick={() => setContactModalOpen(true)}
+            onClick={() => {
+              trackModalOpen("article_desktop");
+              setContactModalOpen(true);
+            }}
             sx={{
               height: "3rem",
               px: "1.25rem",

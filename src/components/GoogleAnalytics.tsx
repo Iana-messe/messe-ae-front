@@ -3,16 +3,6 @@
 import Script from "next/script";
 import { useEffect } from "react";
 
-declare global {
-  interface Window {
-    gtag: (
-      command: string,
-      targetId: string,
-      config?: Record<string, unknown>
-    ) => void;
-  }
-}
-
 interface GoogleAnalyticsProps {
   trackingId?: string;
 }
@@ -71,22 +61,3 @@ export default function GoogleAnalytics({ trackingId }: GoogleAnalyticsProps) {
     </>
   );
 }
-
-// Вспомогательные функции для отслеживания событий
-export const trackEvent = (
-  eventName: string,
-  parameters?: Record<string, unknown>
-) => {
-  if (typeof window !== "undefined" && window.gtag) {
-    window.gtag("event", eventName, parameters);
-  }
-};
-
-export const trackPageView = (url: string) => {
-  if (typeof window !== "undefined" && window.gtag) {
-    window.gtag("config", process.env.NEXT_PUBLIC_GA_TRACKING_ID as string, {
-      page_title: document.title,
-      page_location: url,
-    });
-  }
-};
