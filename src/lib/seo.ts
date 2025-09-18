@@ -5,13 +5,27 @@ const DEFAULT_OG_IMAGE_PATH = "/og-image.jpg";
 const DEFAULT_TWITTER_IMAGE_PATH = "/twitter-image.jpg";
 
 export const DEFAULT_KEYWORDS = [
-  "messe.ae",
+  "exhibition stand contractor Dubai",
+  "exhibition stand contractor in uae",
+  "exhibition stand builder Dubai",
   "exhibition stand builder UAE",
-  "exhibition stand designer Dubai",
-  "custom exhibition stands",
-  "trade show displays",
-  "event solutions",
-  "exhibition contractor",
+  "exhibition company Dubai",
+  "exhibition stand",
+  "exhibition display stand",
+  "display stand exhibition",
+  "stand in exhibition",
+  "expo stand design",
+  "exhibition stand design in dubai",
+  "exhibition stand design",
+  "design of exhibition stand",
+  "exhibition design stand",
+  "exhibition company UAE",
+  "exhibition stand design UAE",
+  "exhibition stand builder",
+  "dubai exhibition stand contractor",
+  "exhibition contractors in dubai",
+  "expo stand builders",
+  "exhibition builder dubai",
 ];
 
 export const toAbsoluteUrl = (path: string): string => {

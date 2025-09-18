@@ -55,7 +55,7 @@ export async function generateMetadata({ params }: { params: Promise<{ category:
       title: `${categoryData.title} Articles | Messe.ae Blog`,
       description:
         categoryData.description ||
-        `Read the latest ${categoryData.title.toLowerCase()} articles and insights from the Messe.ae exhibition stand team.`,
+        `Read Messe articles on ${categoryData.title.toLowerCase()} — exhibition stand design, industry trends, and event solutions in Dubai & UAE. Insights for businesses and event organizers.`,
       path: `/articles/categories/${category}`,
       keywords: [
         `${categoryData.title} articles`,

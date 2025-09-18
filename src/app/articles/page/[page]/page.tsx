@@ -50,7 +50,7 @@ export async function generateMetadata({ params }: { params: Promise<{ page: str
 
   return createMetadata({
     title: `Messe.ae Blog | Page ${pageNumber} Insights`,
-    description: `Browse Messe.ae exhibition stand articles and event strategy insights on page ${pageNumber}. Fresh expertise for trade show planners and marketers.`,
+    description: `Read Messe articles on exhibition stand design, industry trends, and event solutions in Dubai & UAE. Page ${pageNumber} insights for businesses and event organizers.`,
     path: `/articles/page/${pageNumber}`,
     keywords: [
       `messe.ae blog page ${pageNumber}`,

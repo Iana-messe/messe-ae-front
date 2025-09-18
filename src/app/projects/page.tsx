@@ -9,7 +9,7 @@ export const revalidate = 300;
 export const metadata = createMetadata({
   title: 'Exhibition Stand Portfolio | Messe.ae Projects',
   description:
-    'Browse Messe.ae exhibition stand projects across Dubai, the UAE, and international venues. See custom booths, double-deck stands, and immersive trade show experiences.',
+    'Explore Messe projects — exhibition stand builder & contractor in Dubai & UAE. See our custom exhibition stand designs for trade shows and events worldwide.',
   path: '/projects',
   keywords: ['exhibition stand portfolio', 'trade show booth showcase', 'messe.ae projects'],
 });

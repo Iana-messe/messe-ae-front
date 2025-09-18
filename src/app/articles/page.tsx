@@ -21,7 +21,7 @@ export const revalidate = 300;
 export const metadata = createMetadata({
   title: 'Messe.ae Blog | Exhibition Stand Insights & Industry Updates',
   description:
-    'Explore Messe.ae articles covering exhibition stand design trends, event marketing strategies, and behind-the-scenes expertise from our UAE team.',
+    'Read Messe articles on exhibition stand design, industry trends, and event solutions in Dubai & UAE. Insights for businesses and event organizers.',
   path: '/articles',
   keywords: ['messe.ae blog', 'exhibition stand insights', 'event marketing tips'],
 });
