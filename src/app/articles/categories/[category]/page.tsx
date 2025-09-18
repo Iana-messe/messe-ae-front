@@ -1,4 +1,3 @@
-import { Metadata } from 'next';
 import {
   Box,
   Container,
@@ -14,6 +13,7 @@ import { articlesApi } from '@/lib/api/articles';
 import { notFound } from 'next/navigation';
 import { formatArticleDate } from '@/utils/date';
 import Link from 'next/link';
+import { createMetadata } from '@/lib/seo';
 
 // ISR - revalidate every 300 seconds (5 minutes)
 export const revalidate = 300;
@@ -44,34 +44,32 @@ export async function generateStaticParams() {
   }
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ category: string }> }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ category: string }> }) {
   const { category } = await params;
   
   try {
     const categoryResponse = await categoriesApi.getCategoryBySlug(category);
     const categoryData = categoryResponse.data;
-    
-    return {
-      title: `${categoryData.title} Articles - Messe.ae Blog`,
-      description: categoryData.description || `Read the latest ${categoryData.title.toLowerCase()} articles and insights from Messe.ae exhibition experts.`,
-      openGraph: {
-        title: `${categoryData.title} Articles - Messe.ae Blog`,
-        description: categoryData.description || `Latest ${categoryData.title.toLowerCase()} articles from Messe.ae`,
-        url: `https://messe.ae/articles/categories/${category}`,
-        type: 'website',
-      },
-      twitter: {
-        card: 'summary_large_image',
-        title: `${categoryData.title} Articles - Messe.ae Blog`,
-        description: categoryData.description || `Latest ${categoryData.title.toLowerCase()} articles`,
-      },
-    };
+
+    return createMetadata({
+      title: `${categoryData.title} Articles | Messe.ae Blog`,
+      description:
+        categoryData.description ||
+        `Read Messe articles on ${categoryData.title.toLowerCase()} — exhibition stand design, industry trends, and event solutions in Dubai & UAE. Insights for businesses and event organizers.`,
+      path: `/articles/categories/${category}`,
+      keywords: [
+        `${categoryData.title} articles`,
+        'messe.ae blog category',
+        'exhibition stand insights',
+      ],
+    });
   } catch (error) {
     console.error('Error fetching category metadata:', error);
-    return {
-      title: 'Category Not Found',
-      description: 'The requested category could not be found.',
-    };
+    return createMetadata({
+      title: 'Category Not Found | Messe.ae Blog',
+      description: 'The requested article category could not be found on the Messe.ae blog.',
+      path: `/articles/categories/${category}`,
+    });
   }
 }
 

@@ -1,9 +1,10 @@
-import { Metadata } from 'next';
 import ArticlePageClient from '@/components/ArticlePageClient';
 import { Article } from '@/components/ArticleCard';
 import { articlesApi } from '@/lib/api/articles';
 import { notFound } from 'next/navigation';
 import { formatArticleDate } from '@/utils/date';
+import { createMetadata } from '@/lib/seo';
+import { STRAPI_BASE_URL } from '@/lib/api/config';
 
 // ISR - revalidate every 60 seconds
 export const revalidate = 60;
@@ -37,7 +38,7 @@ function stripMarkdown(markdown: string): string {
   return text;
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   
   try {
@@ -48,16 +49,35 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     const plainTitle = stripMarkdown(article.title);
     const plainDescription = article.subtitle || stripMarkdown(article.text).substring(0, 160) + '...';
     
-    return {
+    const imageUrl = article.image?.url
+      ? article.image.url.startsWith('http')
+        ? article.image.url
+        : STRAPI_BASE_URL
+        ? `${STRAPI_BASE_URL}${article.image.url}`
+        : undefined
+      : undefined;
+
+    const keywords = [
+      plainTitle,
+      article.category?.title ?? '',
+      'messe.ae blog article',
+    ].filter(Boolean);
+
+    return createMetadata({
       title: plainTitle,
       description: plainDescription,
-    };
+      path: `/articles/${article.slug}`,
+      keywords,
+      image: imageUrl,
+      type: 'article',
+    });
   } catch (error) {
     console.error('Error fetching article metadata:', error);
-    return {
-      title: 'Article Not Found',
-      description: 'The requested article could not be found.',
-    };
+    return createMetadata({
+      title: 'Article Not Found | Messe.ae Blog',
+      description: 'The requested article could not be found on the Messe.ae blog.',
+      path: `/articles/${slug}`,
+    });
   }
 }
 

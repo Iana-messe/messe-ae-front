@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     template: "%s | Messe.ae",
   },
   description:
-    "Leading exhibition stand builder and designer in UAE. We create innovative exhibition stands, trade show displays, and event solutions worldwide. 20+ years of expertise.",
+    "Messe is an exhibition stand builder & contractor in Dubai specializing in custom exhibition stand design and production across the UAE and internationally.",
   keywords:
     "exhibition stand builder UAE, exhibition stand designer Dubai, trade show displays, event solutions, exhibition contractor",
   authors: [{ name: "Messe.ae" }],
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Messe.ae - Exhibition Stand Builder & Designer in UAE",
     description:
-      "Leading exhibition stand builder and designer in UAE. We create innovative exhibition stands, trade show displays, and event solutions worldwide.",
+      "Messe is an exhibition stand builder & contractor in Dubai specializing in custom exhibition stand design and production across the UAE and internationally.",
     url: "https://messe.ae",
     siteName: "Messe.ae",
     locale: "en_US",
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Messe.ae - Exhibition Stand Builder & Designer in UAE",
     description:
-      "Leading exhibition stand builder and designer in UAE. 20+ years of expertise in creating innovative exhibition solutions.",
+      "Messe is an exhibition stand builder & contractor in Dubai specializing in custom exhibition stand design and production across the UAE and internationally.",
     images: ["/twitter-image.jpg"], // You'll need to add this image
     creator: "@messeae",
   },

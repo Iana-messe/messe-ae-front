@@ -29,6 +29,7 @@ import {
 import { useState, useEffect } from "react";
 import { ContactFormModal } from "@/components/ContactFormModal";
 import { useMobileMenu } from "@/contexts/MobileMenuContext";
+import { trackModalOpen } from "@/lib/analytics";
 
 // Custom Menu Item component with proper states
 const CustomMenuItem = ({
@@ -619,7 +620,10 @@ const Header = () => {
 
             {/* CTA Button - Desktop only */}
             <Box
-              onClick={() => setContactModalOpen(true)}
+              onClick={() => {
+                trackModalOpen("header_desktop");
+                setContactModalOpen(true);
+              }}
               sx={{
                 position: "absolute",
                 right: 0,

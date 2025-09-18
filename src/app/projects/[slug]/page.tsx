@@ -1,5 +1,4 @@
 import React from 'react';
-import { Metadata } from 'next';
 import {
   Box,
   Container,
@@ -14,6 +13,7 @@ import { notFound } from 'next/navigation';
 import { STRAPI_BASE_URL } from '@/lib/api/config';
 import { ProjectResponse } from '@/types/api';
 import { formatProjectSizeDisplay, formatTotalSizeForUrl, hasDisplaySize } from '@/utils/projectSizes';
+import { createMetadata } from '@/lib/seo';
 
 // ISR - revalidate every 300 seconds (5 minutes)
 export const revalidate = 300;
@@ -46,7 +46,7 @@ export async function generateStaticParams() {
 }
 
 // Generate metadata
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   
   try {
@@ -60,21 +60,40 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     const response = await projectsApi.getProjectById(documentId);
     const project = response.data;
     
-    return {
-      title: `${project.client?.name || 'Project'} - Exhibition Stand | Messe.ae`,
-      description: project.description || `Exhibition stand project for ${project.client?.name || 'client'} at ${project.eventName || 'exhibition'}`,
-      openGraph: {
-        title: `${project.client?.name || 'Project'} - Exhibition Stand | Messe.ae`,
-        description: project.description || `Exhibition stand project for ${project.client?.name || 'client'}`,
-        images: project.images?.length ? [{ url: project.images[0].url }] : [],
-      },
-    };
+    const description =
+      project.description ||
+      `Custom exhibition stand for ${project.client?.name || 'our client'} at ${project.eventName || 'a leading trade show'}.`;
+
+    const coverImage = project.images?.[0]?.url
+      ? project.images[0].url.startsWith('http')
+        ? project.images[0].url
+        : STRAPI_BASE_URL
+        ? `${STRAPI_BASE_URL}${project.images[0].url}`
+        : undefined
+      : undefined;
+
+    const keywords = [
+      project.client?.name || '',
+      project.eventName || '',
+      project.constructionType || '',
+      'exhibition stand case study',
+    ].filter(Boolean);
+
+    return createMetadata({
+      title: `${project.client?.name || 'Project'} Exhibition Stand | Messe.ae`,
+      description,
+      path: `/projects/${slug}`,
+      keywords,
+      image: coverImage,
+      type: 'article',
+    });
   } catch (error) {
     console.error('Error fetching project metadata:', error);
-    return {
-      title: 'Project Not Found',
-      description: 'The requested project could not be found.',
-    };
+    return createMetadata({
+      title: 'Project Not Found | Messe.ae',
+      description: 'The requested project case study could not be found.',
+      path: `/projects/${slug}`,
+    });
   }
 }
 

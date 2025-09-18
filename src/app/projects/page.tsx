@@ -1,26 +1,18 @@
 import React, { Suspense } from 'react';
-import { Metadata } from 'next';
 import { Box, CircularProgress } from '@mui/material';
 import ProjectsPageContent from './page-content';
+import { createMetadata } from '@/lib/seo';
 
 // ISR - revalidate every 300 seconds (5 minutes) 
 export const revalidate = 300;
 
-export const metadata: Metadata = {
-  title: 'Our Projects - Exhibition Stands Portfolio | Messe.ae',
-  description: 'Explore our portfolio of exhibition stands and displays. From small booths to large pavilions, discover our work across Dubai, UAE and worldwide.',
-  openGraph: {
-    title: 'Our Projects - Exhibition Stands Portfolio | Messe.ae',
-    description: 'Browse through our extensive portfolio of custom exhibition stands, trade show booths, and display solutions delivered across various industries.',
-    url: 'https://messe.ae/projects',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Our Projects - Exhibition Stands Portfolio | Messe.ae',
-    description: 'Browse through our extensive portfolio of custom exhibition stands, trade show booths, and display solutions.',
-  },
-};
+export const metadata = createMetadata({
+  title: 'Exhibition Stand Portfolio | Messe.ae Projects',
+  description:
+    'Explore Messe projects — exhibition stand builder & contractor in Dubai & UAE. See our custom exhibition stand designs for trade shows and events worldwide.',
+  path: '/projects',
+  keywords: ['exhibition stand portfolio', 'trade show booth showcase', 'messe.ae projects'],
+});
 
 export default function ProjectsPage() {
   return (
