@@ -15,6 +15,7 @@ import {
   organizationSchema,
   websiteSchema,
   serviceSchema,
+  localBusinessSchema,
 } from "@/lib/structured-data";
 
 export default function HomePage() {
@@ -24,6 +25,7 @@ export default function HomePage() {
       <JsonLd data={organizationSchema} />
       <JsonLd data={websiteSchema} />
       <JsonLd data={serviceSchema} />
+      <JsonLd data={localBusinessSchema} />
 
       <Box sx={{ minHeight: "100vh" }}>
         {/* Header */}
