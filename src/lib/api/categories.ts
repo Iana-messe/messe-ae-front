@@ -4,9 +4,9 @@ import { fetcher } from './config';
 export const categoriesApi = {
   getCategories: async (filters?: CategoriesFilters): Promise<CategoriesResponse> => {
     const params = new URLSearchParams();
-    
-    // Populate all fields
-    params.append('populate', '*');
+
+    // Categories are simple entities, no need to populate relations
+    // Only populate if there are related fields in the future
     
     if (filters?.page) {
       params.append('pagination[page]', filters.page.toString());
@@ -32,7 +32,7 @@ export const categoriesApi = {
   getCategoryBySlug: async (slug: string): Promise<CategoryResponse> => {
     const params = new URLSearchParams();
     params.append('filters[slug][$eq]', slug);
-    params.append('populate', '*');
+    // Categories are simple entities, no relations to populate
     
     const response = await fetcher(`/categories?${params.toString()}`);
     
