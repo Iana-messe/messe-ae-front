@@ -4,9 +4,16 @@ import { fetcher } from './config';
 export const projectsApi = {
   getProjects: async (filters?: ProjectsFilters): Promise<ProjectsResponse> => {
     const params = new URLSearchParams();
-    
-    // Populate all fields
-    params.append('populate', '*');
+
+    // Populate only required fields for listing page
+    // For listing: we need client (name, slug), images (only first one with formats), and basic project fields
+    params.append('populate[client][fields][0]', 'name');
+    params.append('populate[client][fields][1]', 'slug');
+    params.append('populate[client][fields][2]', 'description');
+    params.append('populate[client][fields][3]', 'link');
+    params.append('populate[images][fields][0]', 'url');
+    params.append('populate[images][fields][1]', 'alternativeText');
+    params.append('populate[images][fields][2]', 'formats');
     
     // Handle client filters
     if (filters?.clientSlug) {
@@ -86,6 +93,7 @@ export const projectsApi = {
   getProjectBySlug: async (slug: string): Promise<ProjectResponse> => {
     const params = new URLSearchParams();
     params.append('filters[slug][$eq]', slug);
+    // Populate all fields for detail page
     params.append('populate', '*');
     
     const response = await fetcher(`/projects?${params.toString()}`);
@@ -102,7 +110,17 @@ export const projectsApi = {
 
   getProjectById: async (documentId: string): Promise<ProjectResponse> => {
     const params = new URLSearchParams();
-    params.append('populate', '*');
+    // For detail page, we need all fields including all images
+    params.append('populate[client][fields][0]', 'name');
+    params.append('populate[client][fields][1]', 'slug');
+    params.append('populate[client][fields][2]', 'description');
+    params.append('populate[client][fields][3]', 'link');
+    params.append('populate[images][fields][0]', 'url');
+    params.append('populate[images][fields][1]', 'alternativeText');
+    params.append('populate[images][fields][2]', 'formats');
+    params.append('populate[images][fields][3]', 'width');
+    params.append('populate[images][fields][4]', 'height');
+    params.append('populate[images][fields][5]', 'id');
     
     return fetcher(`/projects/${documentId}?${params.toString()}`);
   },

@@ -4,9 +4,13 @@ import { fetcher } from './config';
 export const articlesApi = {
   getArticles: async (filters?: ArticlesFilters): Promise<ArticlesResponse> => {
     const params = new URLSearchParams();
-    
-    // Populate all fields including category
-    params.append('populate', '*');
+
+    // Populate only required fields for listing
+    params.append('populate[category][fields][0]', 'title');
+    params.append('populate[category][fields][1]', 'slug');
+    params.append('populate[image][fields][0]', 'url');
+    params.append('populate[image][fields][1]', 'alternativeText');
+    params.append('populate[image][fields][2]', 'formats');
     
     if (filters?.categorySlug) {
       params.append('filters[category][slug][$eq]', filters.categorySlug);
@@ -36,7 +40,15 @@ export const articlesApi = {
   getArticleBySlug: async (slug: string): Promise<ArticleResponse> => {
     const params = new URLSearchParams();
     params.append('filters[slug][$eq]', slug);
-    params.append('populate', '*');
+    // For detail page, populate all necessary fields
+    params.append('populate[category][fields][0]', 'title');
+    params.append('populate[category][fields][1]', 'slug');
+    params.append('populate[category][fields][2]', 'description');
+    params.append('populate[image][fields][0]', 'url');
+    params.append('populate[image][fields][1]', 'alternativeText');
+    params.append('populate[image][fields][2]', 'formats');
+    params.append('populate[image][fields][3]', 'width');
+    params.append('populate[image][fields][4]', 'height');
     
     const response = await fetcher(`/articles?${params.toString()}`);
     
