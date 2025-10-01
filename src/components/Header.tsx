@@ -29,7 +29,7 @@ import {
 import { useState, useEffect } from "react";
 import { ContactFormModal } from "@/components/ContactFormModal";
 import { useMobileMenu } from "@/contexts/MobileMenuContext";
-import { trackModalOpen } from "@/lib/analytics";
+import { trackModalOpen, trackMetaModalOpen } from "@/lib/analytics";
 
 // Custom Menu Item component with proper states
 const CustomMenuItem = ({
@@ -622,6 +622,7 @@ const Header = () => {
             <Box
               onClick={() => {
                 trackModalOpen("header_desktop");
+                trackMetaModalOpen("header_desktop");
                 setContactModalOpen(true);
               }}
               sx={{

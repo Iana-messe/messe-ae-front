@@ -5,6 +5,7 @@ import EmotionRegistry from "@/lib/emotion-registry";
 import { MobileMenuProvider } from "@/contexts/MobileMenuContext";
 import { Roboto } from "next/font/google";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
+import MetaPixel from "@/components/MetaPixel";
 import { ResourceHints } from "@/components/ResourceHints";
 
 const roboto = Roboto({
@@ -94,6 +95,7 @@ export default function RootLayout({
         <meta name="emotion-insertion-point" content="" />
         <ResourceHints />
         <GoogleAnalytics />
+        <MetaPixel />
       </head>
       <body className={roboto.className}>
         <EmotionRegistry>

@@ -3,6 +3,7 @@
 import { Typography, Box } from "@mui/material";
 import Script from "next/script";
 import { useEffect, useRef, useState } from "react";
+import { trackMetaLead, trackGALead } from "@/lib/analytics";
 
 const portalId = "27038193";
 const formId = "65e0f947-3802-42ba-8cf7-3462817e140c";
@@ -37,6 +38,13 @@ export const ContractForm = ({ type }: { type: "modal" | "footer" }) => {
       formId,
       region,
       target: `#hubspot-form-${type}`,
+      onFormSubmitted: () => {
+        const source = type === "modal" ? "modal_form" : "footer_form";
+
+        // Track form submission in both systems
+        trackGALead(source); // Google Analytics: generate_lead
+        trackMetaLead(source); // Meta Pixel: Lead
+      },
     });
   }, [scriptReady, type]);
 

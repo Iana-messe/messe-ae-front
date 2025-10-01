@@ -3,6 +3,7 @@
 declare global {
   interface Window {
     gtag?: (...args: unknown[]) => void;
+    fbq?: (...args: unknown[]) => void;
   }
 }
 
@@ -155,5 +156,68 @@ export const trackModalOpen = (type: ModalButtonType) => {
     modal_section: event.section,
     modal_device: event.device,
     modal_trigger: type,
+  });
+};
+
+export const trackGALead = (source?: string) => {
+  if (!isGtagReady()) {
+    console.warn("[GA] gtag not ready");
+    return;
+  }
+
+  console.log("[GA] Form submission (Lead):", source || "contact_form");
+
+  // Use standard GA4 'generate_lead' event
+  trackEvent("generate_lead", {
+    event_category: "Form",
+    event_label: "Form Submission",
+    form_source: source || "contact_form",
+  });
+};
+
+// Meta Pixel tracking functions
+const isFbqReady = () =>
+  typeof window !== "undefined" && typeof window.fbq === "function";
+
+export const trackMetaEvent = (
+  eventName: string,
+  parameters?: Record<string, unknown>
+) => {
+  if (!isFbqReady()) {
+    console.warn("[Meta Pixel] fbq not ready");
+    return;
+  }
+
+  console.log("[Meta Pixel] Event:", eventName, parameters);
+  window.fbq!("track", eventName, parameters);
+};
+
+export const trackMetaModalOpen = (type: ModalButtonType) => {
+  const event = MODAL_BUTTON_EVENTS[type];
+
+  if (!event) {
+    if (process.env.NODE_ENV !== "production") {
+      console.warn(`[Meta Pixel] Unknown modal button type: ${type}`);
+    }
+    return;
+  }
+
+  console.log("[Meta Pixel] Modal opened:", type, event.label);
+
+  // Track as Contact event (user initiated contact, but not yet a lead)
+  trackMetaEvent("Contact", {
+    content_name: event.label,
+    content_category: event.category,
+    section: event.section,
+    device: event.device,
+  });
+};
+
+export const trackMetaLead = (source?: string) => {
+  console.log("[Meta Pixel] Form submission:", source || "contact_form");
+
+  trackMetaEvent("Lead", {
+    content_name: "Form Submission",
+    source: source || "contact_form",
   });
 };
