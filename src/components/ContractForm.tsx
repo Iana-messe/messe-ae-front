@@ -18,6 +18,7 @@ declare global {
           formId: string;
           region?: "na1" | "eu1" | string;
           target?: string;
+          onFormSubmitted?: () => void;
         }) => void;
       };
     };
