@@ -99,6 +99,9 @@ export const ContactFormNew = ({ onClose }: { onClose?: () => void }) => {
     } else if (!validateEmail(formData.email)) {
       newErrors.email = "Invalid email";
     }
+    if (!formData.source_new.trim()) {
+      newErrors.source_new = "Please select a source";
+    }
     if (!checkboxes.personalData) {
       newErrors.personalData =
         "You must agree to allow messe to store and process your personal data.";
@@ -422,66 +425,119 @@ export const ContactFormNew = ({ onClose }: { onClose?: () => void }) => {
               },
             }}
           />
-          <TextField
-            fullWidth
-            select
-            value={formData.source_new}
-            onChange={handleChange("source_new")}
-            variant="outlined"
-            error={!!errors.source_new}
-            helperText={errors.source_new}
-            label="How did you hear about us?"
-            InputLabelProps={{
-              sx: {
-                top: "50%",
-                transform: "translate(14px, -50%)",
-                "&.MuiInputLabel-shrink": {
-                  top: 0,
-                  transform: "translate(14px, -9px) scale(0.75)",
-                },
-              },
-            }}
+          <Box
             sx={{
-              "& .MuiOutlinedInput-root": {
-                height: { xs: "2.5rem", md: "auto" },
-                borderRadius: "0.25rem",
-                "& fieldset": {
-                  borderColor: "grey.300",
-                },
-              },
-              "& .MuiInputBase-input": {
-                px: "0.75rem",
-                py: { xs: "0.5rem", md: "0.5rem" },
-                fontSize: "1rem",
-                color: "grey.500",
-              },
-              "& .MuiSelect-select": {
-                px: "0.75rem",
-                py: { xs: "0.5rem", md: "0.5rem" },
-                fontSize: "1rem",
-                color: "grey.500",
-              },
-              "& .MuiSelect-icon": {
-                color: "grey.500",
-              },
+              position: "relative",
+              mt: 2,
+              mb: !!errors.source_new ? 0 : 2,
             }}
           >
-            <MenuItem value="Google search" sx={{ fontSize: "0.875rem" }}>
-              Google search
-            </MenuItem>
-            <MenuItem value="LinkedIn" sx={{ fontSize: "0.875rem" }}>
-              LinkedIn
-            </MenuItem>
-            <MenuItem value="Instagram/Facebook" sx={{ fontSize: "0.875rem" }}>
-              Instagram/Facebook
-            </MenuItem>
-            <MenuItem value="Recommendation" sx={{ fontSize: "0.875rem" }}>
-              Recommendation
-            </MenuItem>
-            <MenuItem value="Other" sx={{ fontSize: "0.875rem" }}>
-              Other
-            </MenuItem>
-          </TextField>
+            <TextField
+              fullWidth
+              select
+              value={formData.source_new}
+              onChange={handleChange("source_new")}
+              variant="outlined"
+              error={!!errors.source_new}
+              // Don't use helperText, render error manually below for better label appearance
+              label="How did you hear about us?"
+              InputLabelProps={{
+                sx: {
+                  top: "50%",
+                  transform: "translate(14px, -50%)",
+                  "&.MuiInputLabel-shrink": {
+                    top: 0,
+                    transform: "translate(14px, -9px) scale(0.75)",
+                  },
+                },
+              }}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  height: { xs: "2.5rem", md: "auto" },
+                  borderRadius: "0.25rem",
+                  "& fieldset": {
+                    borderColor: "grey.300",
+                    transition:
+                      "border-color 0.2s cubic-bezier(.4,0,.2,1)!important",
+                  },
+                  "&:hover fieldset": {
+                    borderColor: "#A64B66",
+                    transition:
+                      "border-color 0.2s cubic-bezier(.4,0,.2,1)!important",
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#A64B66",
+                    transition:
+                      "border-color 0.2s cubic-bezier(.4,0,.2,1)!important",
+                  },
+                },
+                "& .MuiInputBase-input": {
+                  px: "0.75rem",
+                  py: { xs: "0.5rem", md: "0.5rem" },
+                  fontSize: "1rem",
+                  color: "grey.500",
+                },
+                "& .MuiSelect-select": {
+                  px: "0.75rem",
+                  py: { xs: "0.5rem", md: "0.5rem" },
+                  fontSize: "1rem",
+                  color: "grey.500",
+                  transition: "background-color 0.15s cubic-bezier(.4,0,.2,1)",
+                  "&:hover": {
+                    backgroundColor: "#F2F1F9",
+                  },
+                },
+                "& .MuiSelect-icon": {
+                  color: "grey.500",
+                },
+              }}
+              SelectProps={{
+                MenuProps: {
+                  MenuListProps: {
+                    sx: {
+                      "& .MuiMenuItem-root": {
+                        fontSize: "0.875rem",
+                        pl: "0.75rem",
+                        transition:
+                          "background-color 0.15s cubic-bezier(.4,0,.2,1)",
+                        "&:hover": {
+                          backgroundColor: "#F2F1F9",
+                          color: "#A64B66",
+                        },
+                        "&.Mui-selected, &.Mui-selected:hover": {
+                          backgroundColor: "#E6E3EF",
+                          color: "#A64B66",
+                        },
+                      },
+                    },
+                  },
+                },
+              }}
+            >
+              <MenuItem value="Google search">Google search</MenuItem>
+              <MenuItem value="LinkedIn">LinkedIn</MenuItem>
+              <MenuItem value="Instagram/Facebook">Instagram/Facebook</MenuItem>
+              <MenuItem value="Recommendation">Recommendation</MenuItem>
+              <MenuItem value="Other">Other</MenuItem>
+            </TextField>
+            {!!errors.source_new && (
+              <Typography
+                variant="caption"
+                color="error"
+                sx={{
+                  position: "absolute",
+                  left: 0,
+                  bottom: -22,
+                  fontSize: "0.75rem",
+                  lineHeight: 1.1,
+                  ml: "14px",
+                  mt: "2px",
+                }}
+              >
+                {errors.source_new}
+              </Typography>
+            )}
+          </Box>
         </Box>
 
         <FormGroup>

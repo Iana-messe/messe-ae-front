@@ -368,7 +368,7 @@ const FooterSection = () => {
                   }}
                 />
                 <Link
-                  href="https://maps.google.com/?q=UAE,+Dubai,+Dubai+Industrial+City,+KJ+Autopart+complex,+Office+building,+ground+floor,+left+wing.+PO+box+118995"
+                  href="https://maps.app.goo.gl/Dyyt7RWEGjV6pQ1X9?g_st=ipc"
                   target="_blank"
                   rel="noopener noreferrer"
                   sx={{
@@ -384,8 +384,7 @@ const FooterSection = () => {
                     },
                   }}
                 >
-                  UAE, Dubai, Dubai Industrial City, KJ Autopart complex, Office
-                  building, ground floor, left wing. PO box 118995
+                  Messe.ae | Exhibition Stand Builder & Designer in Dubai, UAE
                 </Link>
               </Stack>
             </Stack>
