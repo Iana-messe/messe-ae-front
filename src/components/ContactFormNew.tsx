@@ -35,7 +35,7 @@ export const ContactFormNew = ({ onClose }: { onClose?: () => void }) => {
   });
 
   const [checkboxes, setCheckboxes] = useState({
-    communications: false,
+    communications: true,
     personalData: false,
   });
 
@@ -541,23 +541,6 @@ export const ContactFormNew = ({ onClose }: { onClose?: () => void }) => {
         </Box>
 
         <FormGroup>
-          <FormControlLabel
-            sx={{ pr: "9px", pl: 0, py: 0 }}
-            control={
-              <Checkbox
-                checked={checkboxes.communications}
-                onChange={handleCheckboxChange("communications")}
-                color="primary"
-                disableRipple={true}
-              />
-            }
-            label="I agree to receive other communications from messe."
-          />
-          {errors.communications && (
-            <Typography variant="caption" color="error" sx={{ ml: 4, mt: -1 }}>
-              {errors.communications}
-            </Typography>
-          )}
           <FormControlLabel
             sx={{ pr: "9px", pl: 0, py: 0 }}
             control={
