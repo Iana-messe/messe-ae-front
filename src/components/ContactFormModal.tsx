@@ -99,7 +99,7 @@ export const ContactFormModal = ({ open, onClose }: ContactFormModalProps) => {
         >
           <CloseIcon />
         </IconButton>
-        <ContactFormNew />
+        <ContactFormNew onClose={onClose} />
       </DialogContent>
     </Dialog>
   );
