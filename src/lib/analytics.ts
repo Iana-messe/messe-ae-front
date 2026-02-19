@@ -7,7 +7,7 @@ declare global {
   }
 }
 
-export type ModalDevice = "desktop" | "mobile";
+export type ModalDevice = "desktop" | "mobile" | "all";
 
 export type ModalButtonType =
   | "hero_desktop"
@@ -20,7 +20,8 @@ export type ModalButtonType =
   | "projects_page_mobile"
   | "article_desktop"
   | "footer_desktop"
-  | "footer_mobile";
+  | "footer_mobile"
+  | "submit_contact_form";
 
 interface ModalButtonEventConfig {
   action: string;
@@ -30,7 +31,10 @@ interface ModalButtonEventConfig {
   device: ModalDevice;
 }
 
-export const MODAL_BUTTON_EVENTS: Record<ModalButtonType, ModalButtonEventConfig> = {
+export const MODAL_BUTTON_EVENTS: Record<
+  ModalButtonType,
+  ModalButtonEventConfig
+> = {
   hero_desktop: {
     action: "open_modal",
     category: "Modal",
@@ -107,6 +111,13 @@ export const MODAL_BUTTON_EVENTS: Record<ModalButtonType, ModalButtonEventConfig
     label: "Footer CTA - Mobile",
     section: "Footer",
     device: "mobile",
+  },
+  submit_contact_form: {
+    action: "submit_contact_form",
+    category: "Form",
+    label: "Submit Contact Form",
+    section: "Contact Form",
+    device: "all",
   },
 };
 

@@ -35,6 +35,10 @@ const manifestos = [
     title: "Child Labour Remediation Policy",
     file: "/manifestos/Child Labour Remediation Policy MES_R3.pdf",
   },
+  {
+    title: "Workplace Conditions Certificate",
+    file: "/manifestos/Workplace Conditions Certificate.pdf",
+  },
   // { title: 'Environment Audit', file: null },
 ];
 
