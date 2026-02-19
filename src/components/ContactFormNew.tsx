@@ -14,6 +14,7 @@ import {
   CircularProgress,
   MenuItem,
 } from "@mui/material";
+import { trackEvent } from "@/lib/analytics";
 
 function validateEmail(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -201,6 +202,8 @@ export const ContactFormNew = ({ onClose }: { onClose?: () => void }) => {
           "Thank you for your request, we will contact you in 24 hours at the latest. ",
         severity: "success",
       });
+
+      trackEvent("submit_contact_form", payload);
 
       setFormData({
         name: "",

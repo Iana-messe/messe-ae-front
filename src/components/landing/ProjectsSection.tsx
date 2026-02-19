@@ -131,8 +131,10 @@ const ProjectCard = ({ category }: { category: ProjectCategory }) => {
               <Typography
                 component="sup"
                 sx={{
-                  fontSize: { xs: "10px", md: "20px" },
+                  fontSize: { xs: "15px", md: "25px" },
+                  fontWeight: 700,
                   verticalAlign: "super",
+                  color: "#FFFFFF",
                 }}
               >
                 {category.subtitle}
