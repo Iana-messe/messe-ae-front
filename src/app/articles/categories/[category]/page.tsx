@@ -14,6 +14,8 @@ import { notFound } from 'next/navigation';
 import { formatArticleDate } from '@/utils/date';
 import Link from 'next/link';
 import { NOINDEX_ROBOTS, createMetadata } from '@/lib/seo';
+import JsonLd from '@/components/JsonLd';
+import { getBreadcrumbSchema } from '@/lib/structured-data';
 
 // ISR - revalidate every 300 seconds (5 minutes)
 export const revalidate = 300;
@@ -113,7 +115,18 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
   const hasMore = articlesData ? currentPage < articlesData.meta.pagination.pageCount : false;
   const hasPrevious = currentPage > 1;
 
+  const categoryBreadcrumbSchema = getBreadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Articles', path: '/articles' },
+    {
+      name: categoryData.title,
+      path: `/articles/categories/${category}`,
+    },
+  ]);
+
   return (
+    <>
+      <JsonLd data={categoryBreadcrumbSchema} />
     <Box sx={{ minHeight: '100vh', backgroundColor: '#FFFFFF' }}>
       <Header />
       
@@ -300,5 +313,6 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
 
       <FooterSection />
     </Box>
+    </>
   );
 }

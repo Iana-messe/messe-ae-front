@@ -21,10 +21,14 @@ import {
 export default function HomePage() {
   return (
     <>
-      <JsonLd data={organizationSchema} />
-      <JsonLd data={websiteSchema} />
-      <JsonLd data={serviceSchema} />
-      <JsonLd data={localBusinessSchema} />
+      <JsonLd
+        data={[
+          organizationSchema,
+          websiteSchema,
+          serviceSchema,
+          localBusinessSchema,
+        ]}
+      />
 
       <Box sx={{ minHeight: "100vh" }}>
         <Header />

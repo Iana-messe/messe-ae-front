@@ -15,6 +15,9 @@ import { ProjectResponse } from '@/types/api';
 import { formatProjectSizeDisplay, formatTotalSizeForUrl, hasDisplaySize } from '@/utils/projectSizes';
 import { formatProjectImageAlt } from '@/utils/projectImageAlt';
 import { NOINDEX_ROBOTS, createMetadata } from '@/lib/seo';
+import JsonLd from '@/components/JsonLd';
+import { getBreadcrumbSchema, getProjectSchema } from '@/lib/structured-data';
+import { buildProjectPath } from '@/lib/project-url';
 
 // ISR - revalidate every 300 seconds (5 minutes)
 export const revalidate = 300;
@@ -146,9 +149,22 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   }
 
   const project = data.data;
+  const projectPath = buildProjectPath(project);
+  const projectName =
+    project.client?.name || 'Exhibition stand project';
+
+  const structuredData = [
+    getProjectSchema(project),
+    getBreadcrumbSchema([
+      { name: 'Home', path: '/' },
+      { name: 'Projects', path: '/projects' },
+      { name: projectName, path: projectPath },
+    ]),
+  ];
 
   return (
     <Box sx={{ minHeight: '100vh', backgroundColor: '#FFFFFF' }}>
+      <JsonLd data={structuredData} />
       <Header />
       
       <Container maxWidth="xl" sx={{ px: { xs: '1rem', md: '2.5rem' }, pt: { xs: '1.5rem', md: '3.75rem' }, pb: 8 }}>
