@@ -224,7 +224,6 @@ const AwardCard = ({ award }: AwardCardProps) => {
                 href={award.projectHref}
                 sx={{
                   fontSize: { xs: "0.625rem", md: "0.875rem" },
-                  fontWeight: 400,
                   lineHeight: { xs: "0.75rem", md: "1.125rem" },
                   letterSpacing: { xs: "normal", md: "0.28px" },
                   overflow: "hidden",
