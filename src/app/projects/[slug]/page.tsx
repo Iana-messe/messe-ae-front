@@ -13,6 +13,7 @@ import { notFound } from 'next/navigation';
 import { STRAPI_BASE_URL } from '@/lib/api/config';
 import { ProjectResponse } from '@/types/api';
 import { formatProjectSizeDisplay, formatTotalSizeForUrl, hasDisplaySize } from '@/utils/projectSizes';
+import { formatProjectImageAlt } from '@/utils/projectImageAlt';
 import { NOINDEX_ROBOTS, createMetadata } from '@/lib/seo';
 
 // ISR - revalidate every 300 seconds (5 minutes)
@@ -461,7 +462,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                           ? `${STRAPI_BASE_URL}${image.url}`
                           : image.url
                       }
-                      alt={image.alternativeText || `${project.title} - Image ${index + 1}`}
+                      alt={formatProjectImageAlt(project, index)}
                       width={400}
                       height={316}
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"

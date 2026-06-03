@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Project } from '@/types/api';
 import { STRAPI_BASE_URL } from '@/lib/api/config';
 import { formatProjectSizeDisplay, formatTotalSizeForUrl, hasDisplaySize } from '@/utils/projectSizes';
+import { formatProjectImageAlt } from '@/utils/projectImageAlt';
 
 interface ProjectCardProps {
   project: Project;
@@ -51,7 +52,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         <Box
           component="img"
           src={imageUrl}
-          alt={project.client?.name || project.title}
+          alt={formatProjectImageAlt(project, 0)}
           sx={{
             width: '100%',
             height: { xs: 240, md: 328 },

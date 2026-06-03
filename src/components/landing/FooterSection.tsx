@@ -537,7 +537,7 @@ const FooterSection = () => {
             </Typography>
 
             {/* Contact Form */}
-            <ContactFormNew />
+            <ContactFormNew id="contact-form" />
           </Box>
         </Box>
       </Container>
