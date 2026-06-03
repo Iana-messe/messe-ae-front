@@ -2,6 +2,8 @@ import React, { Suspense } from 'react';
 import { Box, CircularProgress } from '@mui/material';
 import ProjectsPageContent from './page-content';
 import { createMetadata } from '@/lib/seo';
+import JsonLd from '@/components/JsonLd';
+import { getBreadcrumbSchema } from '@/lib/structured-data';
 
 // ISR - revalidate every 300 seconds (5 minutes) 
 export const revalidate = 300;
@@ -14,8 +16,15 @@ export const metadata = createMetadata({
   keywords: ['exhibition stand portfolio', 'trade show booth showcase', 'messe.ae projects'],
 });
 
+const projectsBreadcrumbSchema = getBreadcrumbSchema([
+  { name: 'Home', path: '/' },
+  { name: 'Projects', path: '/projects' },
+]);
+
 export default function ProjectsPage() {
   return (
+    <>
+      <JsonLd data={projectsBreadcrumbSchema} />
     <Suspense 
       fallback={
         <Box sx={{ 
@@ -30,5 +39,6 @@ export default function ProjectsPage() {
     >
       <ProjectsPageContent />
     </Suspense>
+    </>
   );
 }
