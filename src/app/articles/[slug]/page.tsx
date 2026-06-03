@@ -3,7 +3,7 @@ import { Article } from '@/components/ArticleCard';
 import { articlesApi } from '@/lib/api/articles';
 import { notFound } from 'next/navigation';
 import { formatArticleDate } from '@/utils/date';
-import { createMetadata } from '@/lib/seo';
+import { NOINDEX_ROBOTS, createMetadata } from '@/lib/seo';
 import { STRAPI_BASE_URL } from '@/lib/api/config';
 
 // ISR - revalidate every 60 seconds
@@ -73,11 +73,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     });
   } catch (error) {
     console.error('Error fetching article metadata:', error);
-    return createMetadata({
+    return {
       title: 'Article Not Found | Messe.ae Blog',
       description: 'The requested article could not be found on the Messe.ae blog.',
-      path: `/articles/${slug}`,
-    });
+      robots: NOINDEX_ROBOTS,
+    };
   }
 }
 

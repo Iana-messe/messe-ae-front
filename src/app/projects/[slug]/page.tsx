@@ -13,7 +13,7 @@ import { notFound } from 'next/navigation';
 import { STRAPI_BASE_URL } from '@/lib/api/config';
 import { ProjectResponse } from '@/types/api';
 import { formatProjectSizeDisplay, formatTotalSizeForUrl, hasDisplaySize } from '@/utils/projectSizes';
-import { createMetadata } from '@/lib/seo';
+import { NOINDEX_ROBOTS, createMetadata } from '@/lib/seo';
 
 // ISR - revalidate every 300 seconds (5 minutes)
 export const revalidate = 300;
@@ -89,11 +89,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     });
   } catch (error) {
     console.error('Error fetching project metadata:', error);
-    return createMetadata({
+    return {
       title: 'Project Not Found | Messe.ae',
       description: 'The requested project case study could not be found.',
-      path: `/projects/${slug}`,
-    });
+      robots: NOINDEX_ROBOTS,
+    };
   }
 }
 

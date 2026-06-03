@@ -13,7 +13,7 @@ import { articlesApi } from '@/lib/api/articles';
 import { notFound } from 'next/navigation';
 import { formatArticleDate } from '@/utils/date';
 import Link from 'next/link';
-import { createMetadata } from '@/lib/seo';
+import { NOINDEX_ROBOTS, createMetadata } from '@/lib/seo';
 
 // ISR - revalidate every 300 seconds (5 minutes)
 export const revalidate = 300;
@@ -65,11 +65,11 @@ export async function generateMetadata({ params }: { params: Promise<{ category:
     });
   } catch (error) {
     console.error('Error fetching category metadata:', error);
-    return createMetadata({
+    return {
       title: 'Category Not Found | Messe.ae Blog',
       description: 'The requested article category could not be found on the Messe.ae blog.',
-      path: `/articles/categories/${category}`,
-    });
+      robots: NOINDEX_ROBOTS,
+    };
   }
 }
 
