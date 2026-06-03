@@ -1,6 +1,7 @@
 "use client";
 
 import { Box, Container, Typography, Stack } from "@mui/material";
+import Link from "next/link";
 
 interface AwardData {
   id: string;
@@ -9,10 +10,22 @@ interface AwardData {
   category: string;
   show: string;
   client: string;
+  projectHref?: string;
   article: string;
   link: string;
   order: { xs: number; md: number };
 }
+
+const internalLinkSx = {
+  color: "#656CAF",
+  fontWeight: 700,
+  textDecoration: "underline",
+  textDecorationColor: "#656CAF",
+  "&:hover": {
+    color: "#4C53A2",
+    textDecorationColor: "#4C53A2",
+  },
+} as const;
 
 interface AwardCardProps {
   award: AwardData;
@@ -21,7 +34,11 @@ interface AwardCardProps {
 const AWARDS_INTRO = (
   <>
     We proved our expertise by achieving significant awards for outstanding{" "}
-    <Box component="span" sx={{ fontWeight: 700 }}>
+    <Box
+      component={Link}
+      href="/projects"
+      sx={{ ...internalLinkSx, fontWeight: 700 }}
+    >
       exhibition display stands
     </Box>{" "}
     as one of the leading{" "}
@@ -201,22 +218,44 @@ const AwardCard = ({ award }: AwardCardProps) => {
             >
               Client:
             </Typography>
-            <Typography
-              sx={{
-                fontSize: { xs: "0.625rem", md: "0.875rem" },
-                fontWeight: 400,
-                lineHeight: { xs: "0.75rem", md: "1.125rem" },
-                letterSpacing: { xs: "normal", md: "0.28px" },
-                color: "#000000",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                whiteSpace: "nowrap",
-                flex: 1,
-                minWidth: 0,
-              }}
-            >
-              {award.client}
-            </Typography>
+            {award.projectHref ? (
+              <Typography
+                component={Link}
+                href={award.projectHref}
+                sx={{
+                  fontSize: { xs: "0.625rem", md: "0.875rem" },
+                  fontWeight: 400,
+                  lineHeight: { xs: "0.75rem", md: "1.125rem" },
+                  letterSpacing: { xs: "normal", md: "0.28px" },
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                  flex: 1,
+                  minWidth: 0,
+                  ...internalLinkSx,
+                  fontWeight: 400,
+                }}
+              >
+                {award.client}
+              </Typography>
+            ) : (
+              <Typography
+                sx={{
+                  fontSize: { xs: "0.625rem", md: "0.875rem" },
+                  fontWeight: 400,
+                  lineHeight: { xs: "0.75rem", md: "1.125rem" },
+                  letterSpacing: { xs: "normal", md: "0.28px" },
+                  color: "#000000",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                  flex: 1,
+                  minWidth: 0,
+                }}
+              >
+                {award.client}
+              </Typography>
+            )}
           </Box>
 
           <Box
@@ -293,6 +332,8 @@ const awards: AwardData[] = [
     category: "Best Pavilion",
     show: "Big 5",
     client: "Belgium Pavilion",
+    projectHref:
+      "/projects/belgium-pavilion-156m2-lvvd5flhq5s3232u29ortdir",
     article: "World Exhibition Stand Awards – The Winners Supplement",
     link: "https://viewer.joomag.com/world-exhibition-stand-awards-the-winners-2021/0204724001637744364/p36?short=",
     order: { xs: 1, md: 1 },
@@ -315,6 +356,8 @@ const awards: AwardData[] = [
     category: "Best Sustainable Stand",
     show: "ADIPEC",
     client: "Siemens Energy",
+    projectHref:
+      "/projects/siemens-energy-151.5m2-pzzx4jyifyjp4fznhww2npmt",
     article: "World Exhibition Stand Awards – The Winners Supplement",
     link: "https://viewer.joomag.com/world-exhibition-stand-awards-the-winners-2022/0577511001667816570/p56",
     order: { xs: 2, md: 3 },
@@ -326,6 +369,7 @@ const awards: AwardData[] = [
     category: "International Exhibit",
     show: "Dubai International Boat show",
     client: "Amels",
+    projectHref: "/projects/damen-100m2-sodzjz1b3k5yhwnxlf8i7f14",
     article: "Exhibitor Magazine",
     link: "https://www.exhibitoronline.com/topics/article.asp?ID=3477&catID=72",
     order: { xs: 4, md: 4 },

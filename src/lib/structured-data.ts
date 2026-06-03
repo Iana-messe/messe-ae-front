@@ -94,7 +94,7 @@ export const organizationSchema = {
     },
   ],
   sameAs: [
-    "https://www.facebook.com/ExpoGlobalGroup",
+    "https://www.facebook.com/profile.php?id=61571709386052",
     "https://www.instagram.com/messe.ae/",
     "https://www.linkedin.com/company/messe-ae",
     "https://wa.me/971505588060",
