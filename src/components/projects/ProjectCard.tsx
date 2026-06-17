@@ -1,8 +1,8 @@
 import { Box, Typography } from '@mui/material';
 import Link from 'next/link';
 import { Project } from '@/types/api';
-import { STRAPI_BASE_URL } from '@/lib/api/config';
 import { buildProjectPath } from '@/lib/project-url';
+import { resolveStrapiMediaUrl } from '@/utils/strapiMedia';
 import { formatProjectSizeDisplay, hasDisplaySize } from '@/utils/projectSizes';
 import { formatProjectImageAlt } from '@/utils/projectImageAlt';
 
@@ -13,11 +13,7 @@ interface ProjectCardProps {
 export default function ProjectCard({ project }: ProjectCardProps) {
   const baseImageUrl = project.images?.[0]?.formats?.medium?.url || 
                        project.images?.[0]?.url;
-  
-  // Strapi sometimes returns relative URLs, so we need to prepend the base URL
-  const imageUrl = baseImageUrl && !baseImageUrl.startsWith('http') 
-    ? `${STRAPI_BASE_URL}${baseImageUrl}`
-    : baseImageUrl;
+  const imageUrl = resolveStrapiMediaUrl(baseImageUrl);
 
   return (
     <Box

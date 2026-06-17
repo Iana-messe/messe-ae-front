@@ -10,10 +10,10 @@ import Header from '@/components/Header';
 import FooterSection from '@/components/landing/FooterSection';
 import { projectsApi } from '@/lib/api/projects';
 import { notFound } from 'next/navigation';
-import { STRAPI_BASE_URL } from '@/lib/api/config';
 import { ProjectResponse } from '@/types/api';
 import { formatProjectSizeDisplay, formatTotalSizeForUrl, hasDisplaySize } from '@/utils/projectSizes';
 import { formatProjectImageAlt } from '@/utils/projectImageAlt';
+import { resolveStrapiMediaUrl } from '@/utils/strapiMedia';
 import { NOINDEX_ROBOTS, createMetadata } from '@/lib/seo';
 import JsonLd from '@/components/JsonLd';
 import { getBreadcrumbSchema, getProjectSchema } from '@/lib/structured-data';
@@ -69,11 +69,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       `Custom exhibition stand for ${project.client?.name || 'our client'} at ${project.eventName || 'a leading trade show'}.`;
 
     const coverImage = project.images?.[0]?.url
-      ? project.images[0].url.startsWith('http')
-        ? project.images[0].url
-        : STRAPI_BASE_URL
-        ? `${STRAPI_BASE_URL}${project.images[0].url}`
-        : undefined
+      ? resolveStrapiMediaUrl(project.images[0].url) || undefined
       : undefined;
 
     const keywords = [
@@ -473,16 +469,13 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 {project.images.map((image, index) => (
                   <Box key={image.id || index} sx={{ position: 'relative' }}>
                     <Image
-                      src={
-                        image.url && !image.url.startsWith('http')
-                          ? `${STRAPI_BASE_URL}${image.url}`
-                          : image.url
-                      }
+                      src={resolveStrapiMediaUrl(image.url)}
                       alt={formatProjectImageAlt(project, index)}
                       width={400}
                       height={316}
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       quality={85}
+                      unoptimized
                       style={{
                         width: '100%',
                         height: 'auto',
